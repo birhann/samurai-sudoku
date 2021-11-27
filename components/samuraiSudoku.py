@@ -4,8 +4,11 @@ from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5.QtCore import QUrl
 from PyQt5.QtWidgets import QApplication, QFileDialog
 
+import numpy as np
+from time import sleep
+
 from templates.Ui_main import Ui_MainWindow
-from components import fiveThread
+from components.fiveThread import FiveThreadOptions
 from components import tenThread
 
 
@@ -28,6 +31,7 @@ class SamuraiSudoku(QMainWindow, Ui_MainWindow):
             self.setInfo("'{}' {}".format(self.fileName, "file selected!"))
             if self.checkFile(self.filePath):
                 self.setInfo("File format is true!")
+                self.fiveThreadObject = FiveThreadOptions(self)
             else:
                 self.setInfo("Wrong file format!")
         elif self.file.isEmpty() and self.isFileSelected:
@@ -35,6 +39,7 @@ class SamuraiSudoku(QMainWindow, Ui_MainWindow):
             self.setInfo("'{}' {}".format(self.fileName, "old file selected!"))
             if self.checkFile(self.filePath):
                 self.setInfo("File format is true!")
+                self.fiveThreadObject = FiveThreadOptions(self)
             else:
                 self.setInfo("Wrong file format!")
 
@@ -43,7 +48,7 @@ class SamuraiSudoku(QMainWindow, Ui_MainWindow):
             self.setInfo("File not selected!")
 
     def checkFile(self, file):
-        matrix = []
+        self.matrix = []
         sampleFile = False
         if file:
             sampleFile = True
@@ -57,24 +62,21 @@ class SamuraiSudoku(QMainWindow, Ui_MainWindow):
                         temp = []
                         for digit in line.rstrip():
                             temp.append(digit)
-                        matrix.append(temp)
-
-                        self.control = 21 if self.counter == 6 else self.control
-                        self.control = 9 if self.counter == 9 else self.control
-                        self.control = 21 if self.counter == 12 else self.control
-                        self.control = 18 if self.counter == 15 else self.control
+                        self.matrix.append(temp)
+                        self.cellRowsColsControl()
                         self.counter += 1
-
-                        print(line, len(line.rstrip()),
-                              self.counter, self.control)
                     else:
-                        print(line, len(line.rstrip()),
-                              self.counter, self.control)
                         sampleFile = False
                         return
             else:
                 sampleFile = False
         return sampleFile
+
+    def cellRowsColsControl(self):
+        self.control = 21 if self.counter == 6 else self.control
+        self.control = 9 if self.counter == 9 else self.control
+        self.control = 21 if self.counter == 12 else self.control
+        self.control = 18 if self.counter == 15 else self.control
 
     def setInfo(self, msg):
         self.logScreen.insertPlainText(
