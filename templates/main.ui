@@ -15303,88 +15303,6 @@ aborder-color:  rgb(195, 195, 195);
       </item>
      </layout>
     </widget>
-    <zorder>frame_32</zorder>
-    <zorder>frame_38</zorder>
-    <zorder>frame_6</zorder>
-    <zorder>frame_28</zorder>
-    <zorder>frame_36</zorder>
-    <zorder>frame_41</zorder>
-    <zorder>frame_2</zorder>
-    <zorder>frame_3</zorder>
-    <zorder>frame_42</zorder>
-    <zorder>frame_25</zorder>
-    <zorder>frame_8</zorder>
-    <zorder>frame_22</zorder>
-    <zorder>frame_19</zorder>
-    <zorder>frame_21</zorder>
-    <zorder>frame_37</zorder>
-    <zorder>frame_35</zorder>
-    <zorder>frame_13</zorder>
-    <zorder>frame_18</zorder>
-    <zorder>frame_5</zorder>
-    <zorder>frame_27</zorder>
-    <zorder>frame_39</zorder>
-    <zorder>frame_17</zorder>
-    <zorder>frame_10</zorder>
-    <zorder>frame_9</zorder>
-    <zorder>frame_20</zorder>
-    <zorder>frame_4</zorder>
-    <zorder>frame_24</zorder>
-    <zorder>frame_12</zorder>
-    <zorder>frame_33</zorder>
-    <zorder>frame_11</zorder>
-    <zorder>frame_14</zorder>
-    <zorder>frame_30</zorder>
-    <zorder>frame_29</zorder>
-    <zorder>frame_34</zorder>
-    <zorder>frame_23</zorder>
-    <zorder>frame_31</zorder>
-    <zorder>frame_40</zorder>
-    <zorder>frame_16</zorder>
-    <zorder>frame_15</zorder>
-    <zorder>frame_7</zorder>
-    <zorder>frame_26</zorder>
-    <zorder>frame_32</zorder>
-    <zorder>frame_38</zorder>
-    <zorder>frame_6</zorder>
-    <zorder>frame_28</zorder>
-    <zorder>frame_36</zorder>
-    <zorder>frame_41</zorder>
-    <zorder>frame_2</zorder>
-    <zorder>frame_3</zorder>
-    <zorder>frame_42</zorder>
-    <zorder>frame_25</zorder>
-    <zorder>frame_8</zorder>
-    <zorder>frame_22</zorder>
-    <zorder>frame_19</zorder>
-    <zorder>frame_21</zorder>
-    <zorder>frame_37</zorder>
-    <zorder>frame_35</zorder>
-    <zorder>frame_13</zorder>
-    <zorder>frame_18</zorder>
-    <zorder>frame_5</zorder>
-    <zorder>frame_27</zorder>
-    <zorder>frame_39</zorder>
-    <zorder>frame_17</zorder>
-    <zorder>frame_10</zorder>
-    <zorder>frame_9</zorder>
-    <zorder>frame_20</zorder>
-    <zorder>frame_4</zorder>
-    <zorder>frame_24</zorder>
-    <zorder>frame_12</zorder>
-    <zorder>frame_33</zorder>
-    <zorder>frame_11</zorder>
-    <zorder>frame_14</zorder>
-    <zorder>frame_30</zorder>
-    <zorder>frame_29</zorder>
-    <zorder>frame_34</zorder>
-    <zorder>frame_23</zorder>
-    <zorder>frame_31</zorder>
-    <zorder>frame_40</zorder>
-    <zorder>frame_16</zorder>
-    <zorder>frame_15</zorder>
-    <zorder>frame_7</zorder>
-    <zorder>frame_26</zorder>
    </widget>
    <widget class="Line" name="line">
     <property name="geometry">
@@ -15420,7 +15338,7 @@ aborder-color:  rgb(195, 195, 195);
      </item>
     </layout>
    </widget>
-   <widget class="QPlainTextEdit" name="plainTextEdit">
+   <widget class="QPlainTextEdit" name="logScreen">
     <property name="geometry">
      <rect>
       <x>713</x>
@@ -15444,7 +15362,7 @@ aborder-color:  rgb(195, 195, 195);
       <number>3</number>
      </property>
      <item>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="loadButton">
        <property name="minimumSize">
         <size>
          <width>0</width>
