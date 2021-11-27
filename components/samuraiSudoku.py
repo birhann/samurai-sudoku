@@ -1,7 +1,7 @@
 import sys
 
 from PyQt5.QtWidgets import QMainWindow, QApplication
-from PyQt5.QtCore import QUrl
+from PyQt5.QtCore import QUrl, QThread, pyqtSignal
 from PyQt5.QtWidgets import QApplication, QFileDialog
 
 import numpy as np
@@ -9,6 +9,7 @@ from time import sleep
 
 from templates.Ui_main import Ui_MainWindow
 from components.fiveThread import FiveThreadOptions
+from components.tenThread import TenThreadOptions
 from components import tenThread
 
 
@@ -17,6 +18,7 @@ class SamuraiSudoku(QMainWindow, Ui_MainWindow):
         super().__init__()
         self.setupUi(self)
         self.loadButton.clicked.connect(self.chooseFile)
+        self.clearButton.clicked.connect(self.clearCells)
 
     def chooseFile(self):
         self.filePath, self.filetype = QFileDialog.getOpenFileName(
@@ -31,7 +33,7 @@ class SamuraiSudoku(QMainWindow, Ui_MainWindow):
             self.setInfo("'{}' {}".format(self.fileName, "file selected!"))
             if self.checkFile(self.filePath):
                 self.setInfo("File format is true!")
-                self.fiveThreadObject = FiveThreadOptions(self)
+                self.startLoad()
             else:
                 self.setInfo("Wrong file format!")
         elif self.file.isEmpty() and self.isFileSelected:
@@ -39,7 +41,7 @@ class SamuraiSudoku(QMainWindow, Ui_MainWindow):
             self.setInfo("'{}' {}".format(self.fileName, "old file selected!"))
             if self.checkFile(self.filePath):
                 self.setInfo("File format is true!")
-                self.fiveThreadObject = FiveThreadOptions(self)
+                self.startLoad()
             else:
                 self.setInfo("Wrong file format!")
 
@@ -82,6 +84,49 @@ class SamuraiSudoku(QMainWindow, Ui_MainWindow):
         self.logScreen.insertPlainText(
             "main: {}\n".format(msg))
         self.logScreen.ensureCursorVisible()
+
+    def startLoad(self):
+        if self.threadRadioButton5.isChecked():
+            self.fiveThreadObject = FiveThreadOptions(self)
+            self.fiveThreadObject.loadCells()
+        else:
+            self.tenThreadObject = TenThreadOptions(self)
+            self.tenThreadObject.loadCells()
+
+    def clearCells(self):
+        self.clearThread = ClearCellWorker()
+        self.clearThread.daemon = True
+        self.clearThread.clearCell.connect(self.clearCell)
+        self.clearThread.finished.connect(self.clearCellIsDone)
+        self.clearThread.start()
+        self.setInfo("Sample sudoku is clearing..")
+
+    def clearCell(self, i, j):
+        getattr(self, "cell_"+str(i) +
+                "_"+str(j)).clear()
+
+    def clearCellIsDone(self):
+        self.setInfo("Sample sudoku is cleared successfully!")
+
+
+class ClearCellWorker(QThread):
+    clearCell = pyqtSignal(int, int)
+    control = 18
+    counter = 1
+
+    def run(self):
+        for i in range(21):
+            for j in range(self.control):
+                self.clearCell.emit(i, j)
+                sleep(0.002)
+            self.cellRowsColsControl()
+            self.counter += 1
+
+    def cellRowsColsControl(self):
+        self.control = 21 if self.counter == 6 else self.control
+        self.control = 9 if self.counter == 9 else self.control
+        self.control = 21 if self.counter == 12 else self.control
+        self.control = 18 if self.counter == 15 else self.control
 
 
 if __name__ == "__main__":

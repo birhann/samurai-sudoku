@@ -22,7 +22,7 @@ class SettingCellWorker(QThread):
                     self.setNumberToCell.emit(i, j, False)
                 else:
                     self.setNumberToCell.emit(i, j, True)
-                sleep(0.005)
+                sleep(0.002)
 
             self.cellRowsColsControl()
             self.counter += 1
@@ -39,17 +39,19 @@ class FiveThreadOptions():
         self.gui = GUI
         self.mainMatrix = self.gui.matrix
 
-        self.setlineEdit()
-
-    def setlineEdit(self):
-
+    def loadCells(self):
         self.thread = SettingCellWorker()
         self.thread.daemon = True
         self.thread.matrix = self.mainMatrix
         self.thread.setNumberToCell.connect(self.setNumberToGui)
-        # self.thread.finished.connect(self.gui.setInfo)
-        # self.thread.settingFinished.connect(self.gui.setInfo)
+        self.thread.finished.connect(self.loadIsDone)
         self.thread.start()
+        self.gui.setInfo("Sample sudoku is loading..")
+
+    def loadIsDone(self):
+        self.gui.setInfo("Sample sudoku is loaded successfully!")
+        self.gui.clearButton.setEnabled(True)
+        self.gui.solveButton.setEnabled(True)
 
     def setNumberToGui(self, i, j, empty):
         if not empty:
@@ -58,3 +60,8 @@ class FiveThreadOptions():
         else:
             getattr(self.gui, "cell_"+str(i) +
                     "_"+str(j)).setText("")
+
+    def setInfo(self, msg):
+        self.gui.logScreen.insertPlainText(
+            "5 Threading: {}\n".format(msg))
+        self.logScreen.ensureCursorVisible()
