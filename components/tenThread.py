@@ -50,6 +50,7 @@ class TenThreadOptions():
         self.gui.setInfo("Sample sudoku is loaded successfully!")
         self.gui.clearButton.setEnabled(True)
         self.gui.solveButton.setEnabled(True)
+        self.gui.setInfo("Ready to solve with 10 thread!")
 
     def setNumberToGui(self, i, j, empty):
         if not empty:
@@ -62,4 +63,4 @@ class TenThreadOptions():
     def setInfo(self, msg):
         self.gui.logScreen.insertPlainText(
             "10 Threading: {}\n".format(msg))
-        self.logScreen.ensureCursorVisible()
+        self.gui.logScreen.ensureCursorVisible()

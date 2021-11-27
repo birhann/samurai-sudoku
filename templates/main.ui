@@ -221,7 +221,7 @@
          <string>9</string>
         </property>
         <property name="text">
-         <string>4</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -485,7 +485,7 @@
          <string>9</string>
         </property>
         <property name="text">
-         <string>6</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -665,7 +665,7 @@
          <string>9</string>
         </property>
         <property name="text">
-         <string>7</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -701,7 +701,7 @@
          <string>9</string>
         </property>
         <property name="text">
-         <string>9</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -932,7 +932,7 @@
          <string>9</string>
         </property>
         <property name="text">
-         <string>4</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -1004,7 +1004,7 @@
          <string>9</string>
         </property>
         <property name="text">
-         <string>7</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -1340,7 +1340,7 @@
          <string>9</string>
         </property>
         <property name="text">
-         <string>4</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -1412,7 +1412,7 @@
          <string>9</string>
         </property>
         <property name="text">
-         <string>7</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -1856,7 +1856,7 @@
          <string>9</string>
         </property>
         <property name="text">
-         <string>2</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -2048,7 +2048,7 @@
          <string>9</string>
         </property>
         <property name="text">
-         <string>4</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -2120,7 +2120,7 @@
          <string>9</string>
         </property>
         <property name="text">
-         <string>7</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -2492,7 +2492,7 @@
          <string>9</string>
         </property>
         <property name="text">
-         <string>7</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -2643,7 +2643,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>1</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -2979,7 +2979,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>2</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -3279,7 +3279,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>7</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -3387,7 +3387,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>1</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -3579,7 +3579,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>4</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -3651,7 +3651,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>7</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -3951,7 +3951,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>4</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -4467,7 +4467,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>2</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -4695,7 +4695,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>4</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -5067,7 +5067,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>4</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -5439,7 +5439,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>4</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -5775,7 +5775,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>4</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -5847,7 +5847,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>7</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -6183,7 +6183,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>4</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -6255,7 +6255,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>7</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -6519,7 +6519,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>4</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -6591,7 +6591,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>7</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -6927,7 +6927,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>4</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -7263,7 +7263,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>4</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -7335,7 +7335,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>7</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -7671,7 +7671,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>4</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -7743,7 +7743,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>7</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -7935,7 +7935,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>6</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -8115,7 +8115,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>7</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -8151,7 +8151,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>9</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -8379,7 +8379,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>4</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -8451,7 +8451,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>7</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -8787,7 +8787,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>4</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -8859,7 +8859,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>7</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -9123,7 +9123,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>4</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -9195,7 +9195,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>7</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -9423,7 +9423,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>6</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -9603,7 +9603,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>7</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -9639,7 +9639,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>9</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -9903,7 +9903,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>4</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -10275,7 +10275,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>4</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -10719,7 +10719,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>7</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -10827,7 +10827,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>1</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -11163,7 +11163,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>2</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -11391,7 +11391,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>4</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -11463,7 +11463,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>7</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -11835,7 +11835,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>7</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -11943,7 +11943,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>1</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -12027,7 +12027,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>6</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -12207,7 +12207,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>7</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -12243,7 +12243,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>9</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -12507,7 +12507,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>4</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -12579,7 +12579,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>7</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -12771,7 +12771,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>6</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -12951,7 +12951,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>7</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -12987,7 +12987,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>9</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -13251,7 +13251,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>4</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -13323,7 +13323,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>7</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -13515,7 +13515,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>6</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -13695,7 +13695,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>7</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -13731,7 +13731,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>9</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -14067,7 +14067,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>7</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -14175,7 +14175,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>1</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -14331,7 +14331,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>7</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -14511,7 +14511,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>4</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -14739,7 +14739,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>4</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -14811,7 +14811,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>7</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -15075,7 +15075,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>4</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -15147,7 +15147,7 @@ aborder-color:  rgb(195, 195, 195);
          <string>9</string>
         </property>
         <property name="text">
-         <string>7</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -15381,7 +15381,7 @@ aborder-color:  rgb(195, 195, 195);
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_2">
+      <widget class="QPushButton" name="solveButton">
        <property name="enabled">
         <bool>false</bool>
        </property>
@@ -15403,7 +15403,7 @@ aborder-color:  rgb(195, 195, 195);
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_3">
+      <widget class="QPushButton" name="compareButton">
        <property name="enabled">
         <bool>false</bool>
        </property>
@@ -15425,7 +15425,7 @@ aborder-color:  rgb(195, 195, 195);
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_4">
+      <widget class="QPushButton" name="clearButton">
        <property name="enabled">
         <bool>false</bool>
        </property>
@@ -15448,7 +15448,7 @@ aborder-color:  rgb(195, 195, 195);
      </item>
     </layout>
    </widget>
-   <widget class="QRadioButton" name="radioButton">
+   <widget class="QRadioButton" name="threadRadioButton5">
     <property name="geometry">
      <rect>
       <x>715</x>
@@ -15464,7 +15464,7 @@ aborder-color:  rgb(195, 195, 195);
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QRadioButton" name="radioButton_2">
+   <widget class="QRadioButton" name="threadRadioButton10">
     <property name="geometry">
      <rect>
       <x>934</x>

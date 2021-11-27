@@ -17,8 +17,10 @@ class SamuraiSudoku(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        self.threadCount = None
         self.loadButton.clicked.connect(self.chooseFile)
         self.clearButton.clicked.connect(self.clearCells)
+        self.solveButton.clicked.connect(self.solveSudoku)
 
     def chooseFile(self):
         self.filePath, self.filetype = QFileDialog.getOpenFileName(
@@ -88,9 +90,11 @@ class SamuraiSudoku(QMainWindow, Ui_MainWindow):
     def startLoad(self):
         if self.threadRadioButton5.isChecked():
             self.fiveThreadObject = FiveThreadOptions(self)
+            self.threadCount = 5
             self.fiveThreadObject.loadCells()
         else:
             self.tenThreadObject = TenThreadOptions(self)
+            self.threadCount = 10
             self.tenThreadObject.loadCells()
 
     def clearCells(self):
@@ -107,6 +111,24 @@ class SamuraiSudoku(QMainWindow, Ui_MainWindow):
 
     def clearCellIsDone(self):
         self.setInfo("Sample sudoku is cleared successfully!")
+
+    def solveSudoku(self):
+        self.setClickables(False)
+        if self.threadCount == 5:
+            self.fiveThreadObject.solveSudoku()
+        elif self.threadCount == 10:
+            pass
+        else:
+            self.setInfo("Unknow Error!")
+
+    def setClickables(self, status):
+        self.solveButton.setEnabled(status)
+        self.loadButton.setEnabled(status)
+        self.clearButton.setEnabled(status)
+        self.threadRadioButton5.setEnabled(status)
+        self.threadRadioButton10.setEnabled(status)
+
+    def setEnabledTrue(self):
 
 
 class ClearCellWorker(QThread):
