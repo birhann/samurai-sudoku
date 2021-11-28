@@ -19,7 +19,7 @@ class SamuraiSudoku(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.threadCount = None
         self.loadButton.clicked.connect(self.chooseFile)
-        self.clearButton.clicked.connect(self.clearCells)
+        self.clearButton.clicked.connect(self.clear)
         self.solveButton.clicked.connect(self.solveSudoku)
 
     def chooseFile(self):
@@ -98,12 +98,14 @@ class SamuraiSudoku(QMainWindow, Ui_MainWindow):
             self.threadCount = 10
             self.tenThreadObject.loadCells()
 
-    def clearCells(self):
+    def clear(self):
         self.clearThread = ClearCellWorker()
         self.clearThread.daemon = True
         self.clearThread.clearCell.connect(self.clearCell)
         self.clearThread.finished.connect(self.clearCellIsDone)
         self.clearThread.start()
+        self.setClickables(False)
+        self.loadButton.setEnabled(True)
         self.setInfo("Sample sudoku is clearing..")
 
     def clearCell(self, i, j):

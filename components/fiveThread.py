@@ -35,6 +35,11 @@ class FiveThreadOptions():
     def __init__(self, GUI) -> None:
         self.gui = GUI
         self.mainMatrix = self.gui.matrix
+        self.isTopLeftSudokuDone = False
+        self.isTopRightSudokuDone = False
+        self.isMiddleSudokuDone = False
+        self.isBottomLeftSudokuDone = False
+        self.isBottomRightSudokuDone = False
 
     def loadCells(self):
         self.thread = SettingCellWorker()
@@ -66,46 +71,77 @@ class FiveThreadOptions():
 
     def solveSudoku(self):
         self.Sudoku = SudokuObject(self.mainMatrix)
+        self.createSudokuThreads()
+        # self.tL.start()
 
+        self.m.start()
+        self.tR.start()
+        # self.bL.start()
+        # self.bR.start()
+
+    def createSudokuThreads(self):
         self.tL = solveTopLeftWorker()
         self.tL.daemon = True
         self.tL.sudoku = self.Sudoku
         self.tL.setCell.connect(self.tLsetCell)
-        self.tL.finished.connect(self.threadsFinished)
+        self.tL.finished.connect(self.tLthreadFinished)
 
         self.tR = solveTopRightWorker()
         self.tR.daemon = True
-        self.tR.sudoku = self.Sudoku.topRight
+        self.tR.sudoku = self.Sudoku
         self.tR.setCell.connect(self.tRsetCell)
-        self.tR.finished.connect(self.threadsFinished)
+        self.tR.finished.connect(self.tRthreadFinished)
 
         self.bL = solveBottomLeftWorker()
         self.bL.daemon = True
-        self.bL.sudoku = self.Sudoku.bottomLeft
+        self.bL.sudoku = self.Sudoku
         self.bL.setCell.connect(self.bLsetCell)
         self.bL.finished.connect(self.threadsFinished)
 
         self.bR = solveBottomRightWorker()
         self.bR.daemon = True
-        self.bR.sudoku = self.Sudoku.bottomRight
+        self.bR.sudoku = self.Sudoku
         self.bR.setCell.connect(self.bRsetCell)
         self.bR.finished.connect(self.threadsFinished)
 
         self.m = solveMiddleWorker()
         self.m.daemon = True
-        self.m.sudoku = self.Sudoku.middle
+        self.m.sudoku = self.Sudoku
         self.m.setCell.connect(self.mSetCell)
-        self.m.finished.connect(self.threadsFinished)
+        self.m.finished.connect(self.mthreadFinished)
 
-        self.tL.start()
-        # self.tR.start()
-        # self.bL.start()
-        # self.bR.start()
-        self.m.start()
+    def tLthreadFinished(self):
+        self.isTopLeftSudokuDone = True
+        if not self.isMiddleSudokuDone:
+            for row in range(6, 9):
+                for col in range(6, 9):
+                    self.Sudoku.middle[row -
+                                       6][col-6] = self.Sudoku.topLeft[row][col]
+            self.m.relevantSudokufinished
+
+    def mthreadFinished(self):
+        self.isMiddleSudokuDone = True
+        if not self.isTopRightSudokuDone:
+            for row in range(6, 9):
+                for col in range(0, 3):
+                    self.Sudoku.topRight[row][col] = self.Sudoku.middle[row-6][col+6]
+            print(np.array(self.Sudoku.topRight))
+            self.tR.relevantSudokufinished
+
+    def tRthreadFinished(self):
+        self.isTopRightSudokuDone = True
+        if not self.isMiddleSudokuDone:
+            for row in range(6, 9):
+                for col in range(0, 3):
+                    self.Sudoku.middle[row -
+                                       6][col+6] = self.Sudoku.topRight[row][col]
+            self.m.relevantSudokufinished
 
     def threadsFinished(self):
         self.gui.setClickables(True)
         self.gui.compareButton.setEnabled(False)
+        print(np.array(
+            self.Sudoku.middle), "\n", np.array(self.Sudoku.topRight), "\n")
         self.setInfo("1 Sudoku is solved!")
 
     def tLsetCell(self, r, c, d, isEmpty):
@@ -174,6 +210,7 @@ class FiveThreadOptions():
 
 
 class solveTopLeftWorker(QThread):
+    relevantSudokufinished = False
     setCell = pyqtSignal(int, int, int, object)
     sudoku = None
 
@@ -187,13 +224,15 @@ class solveTopLeftWorker(QThread):
                     for d in range(1, 10):
                         if self.isValid(r, c, d):
                             if self.isValidSamurai(r, c, d):
-                                self.setCell.emit(r, c, d, False)
-                                self.sudoku.topLeft[r][c] = d
-                                if self.solve():
-                                    return self.sudoku.topLeft
-                                self.setCell.emit(r, c, d, True)
-                                self.sudoku.topLeft[r][c] = "*"
-                            # return False
+                                if not self.relevantSudokufinished:
+                                    self.setCell.emit(r, c, d, False)
+                                    self.sudoku.topLeft[r][c] = d
+                                    if self.solve():
+                                        return True
+                                    self.setCell.emit(r, c, d, True)
+                                    self.sudoku.topLeft[r][c] = "*"
+                                else:
+                                    break
                     return False
         return True
 
@@ -211,21 +250,20 @@ class solveTopLeftWorker(QThread):
         return True
 
     def isValidSamurai(self, r, c, d):
-        tempList = self.sudoku.middle[r-6]
         if r >= 6 and c >= 6:
-            print(tempList, self.sudoku.topLeft[r][c])
-            tempList[c-6] = self.sudoku.topLeft[r][c]
-            if np.unique(tempList).size == len(tempList):
-                print(tempList)
-                return True
-            else:
-                print(tempList)
-                return False
+            if str(d) in self.sudoku.middle[r-6]:
+                if self.sudoku.middle[r-6].index(str(d)) + 6 != c:
+                    return False
+            if str(d) in [i[c-6] for i in self.sudoku.middle]:
+                if [i[c-6] for i in self.sudoku.middle].index(str(d)) + 6 != r:
+                    return False
+            return True
         else:
             return True
 
 
 class solveTopRightWorker(QThread):
+    relevantSudokufinished = False
     setCell = pyqtSignal(int, int, int, object)
     sudoku = None
 
@@ -235,30 +273,47 @@ class solveTopRightWorker(QThread):
     def solve(self):
         for r in range(9):
             for c in range(9):
-                if str(self.sudoku[r][c]) == "*":
+                if str(self.sudoku.topRight[r][c]) == "*":
                     for d in range(1, 10):
-                        if self.isValid(r, c, d, self.sudoku):
-                            self.setCell.emit(r, c, d, False)
-                            self.sudoku[r][c] = d
-                            if self.solve():
-                                return self.sudoku
-                            self.setCell.emit(r, c, d, True)
-                            self.sudoku[r][c] = "*"
+                        if self.isValid(r, c, d):
+                            # sleep(0.0003)
+                            if self.isValidSamurai(r, c, d):
+                                if not self.relevantSudokufinished:
+                                    self.setCell.emit(r, c, d, False)
+                                    self.sudoku.topRight[r][c] = d
+                                    if self.solve():
+                                        return self.sudoku.topRight
+                                    self.setCell.emit(r, c, d, True)
+                                    self.sudoku.topRight[r][c] = "*"
+                                else:
+                                    break
                     return False
         return True
 
-    def isValid(self, r, c, d, sudoku):
+    def isValid(self, r, c, d):
         for row in range(9):
-            if str(sudoku[row][c]) == str(d):
+            if str(self.sudoku.topRight[row][c]) == str(d):
                 return False
         for col in range(9):
-            if str(sudoku[r][col]) == str(d):
+            if str(self.sudoku.topRight[r][col]) == str(d):
                 return False
         for row in range((r//3)*3, (r//3+1)*3):
             for col in range((c//3)*3, (c//3+1)*3):
-                if str(sudoku[row][col]) == str(d):
+                if str(self.sudoku.topRight[row][col]) == str(d):
                     return False
         return True
+
+    def isValidSamurai(self, r, c, d):
+        if r >= 6 and c >= 6:
+            if str(d) in self.sudoku.middle[r-6]:
+                if self.sudoku.middle[r-6].index(str(d)) + 6 != c:
+                    return False
+            if str(d) in [i[c-6] for i in self.sudoku.middle]:
+                if [i[c-6] for i in self.sudoku.middle].index(str(d)) + 6 != r:
+                    return False
+            return True
+        else:
+            return True
 
 
 class solveBottomLeftWorker(QThread):
@@ -336,6 +391,7 @@ class solveBottomRightWorker(QThread):
 class solveMiddleWorker(QThread):
     setCell = pyqtSignal(int, int, int, object)
     sudoku = None
+    relevantSudokufinished = False
 
     def run(self):
         self.solve()
@@ -343,30 +399,48 @@ class solveMiddleWorker(QThread):
     def solve(self):
         for r in range(9):
             for c in range(9):
-                if str(self.sudoku[r][c]) == "*":
+                if str(self.sudoku.middle[r][c]) == "*":
                     for d in range(1, 10):
-                        if self.isValid(r, c, d, self.sudoku):
-                            self.setCell.emit(r, c, d, False)
-                            self.sudoku[r][c] = d
-                            if self.solve():
-                                return self.sudoku
-                            self.setCell.emit(r, c, d, True)
-                            self.sudoku[r][c] = "*"
+                        if self.isValid(r, c, d):
+                            if self.isValidSamurai(r, c, d):
+                                if not self.relevantSudokufinished:
+                                    # sleep(0.0003)
+                                    self.setCell.emit(r, c, d, False)
+                                    self.sudoku.middle[r][c] = d
+                                    if self.solve():
+                                        return True
+                                    self.setCell.emit(r, c, d, True)
+                                    self.sudoku.middle[r][c] = "*"
+                                else:
+                                    break
                     return False
         return True
 
-    def isValid(self, r, c, d, sudoku):
+    def isValid(self, r, c, d):
         for row in range(9):
-            if str(sudoku[row][c]) == str(d):
+            if str(self.sudoku.middle[row][c]) == str(d):
                 return False
         for col in range(9):
-            if str(sudoku[r][col]) == str(d):
+            if str(self.sudoku.middle[r][col]) == str(d):
                 return False
         for row in range((r//3)*3, (r//3+1)*3):
             for col in range((c//3)*3, (c//3+1)*3):
-                if str(sudoku[row][col]) == str(d):
+                if str(self.sudoku.middle[row][col]) == str(d):
                     return False
         return True
+
+    def isValidSamurai(self, r, c, d):
+        if r < 3 and c < 3:
+            if str(d) in self.sudoku.topLeft[r+6]:
+                if self.sudoku.topLeft[r+6].index(str(d))-6 != c:
+                    return False
+
+            if str(d) in [i[c+6] for i in self.sudoku.topLeft]:
+                if [i[c+6] for i in self.sudoku.topLeft].index(str(d)) != c+6:
+                    return False
+            return True
+        else:
+            return True
 
 
 class ThreadOperations():
