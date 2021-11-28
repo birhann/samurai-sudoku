@@ -92,6 +92,7 @@ class SamuraiSudoku(QMainWindow, Ui_MainWindow):
             self.fiveThreadObject = FiveThreadOptions(self)
             self.threadCount = 5
             self.fiveThreadObject.loadCells()
+
         else:
             self.tenThreadObject = TenThreadOptions(self)
             self.threadCount = 10
@@ -114,6 +115,7 @@ class SamuraiSudoku(QMainWindow, Ui_MainWindow):
 
     def solveSudoku(self):
         self.setClickables(False)
+        self.setInfo("Starting to solve..")
         if self.threadCount == 5:
             self.fiveThreadObject.solveSudoku()
         elif self.threadCount == 10:
@@ -128,8 +130,6 @@ class SamuraiSudoku(QMainWindow, Ui_MainWindow):
         self.threadRadioButton5.setEnabled(status)
         self.threadRadioButton10.setEnabled(status)
 
-    def setEnabledTrue(self):
-
 
 class ClearCellWorker(QThread):
     clearCell = pyqtSignal(int, int)
@@ -140,7 +140,7 @@ class ClearCellWorker(QThread):
         for i in range(21):
             for j in range(self.control):
                 self.clearCell.emit(i, j)
-                sleep(0.002)
+                # sleep(0.002)
             self.cellRowsColsControl()
             self.counter += 1
 
