@@ -15334,7 +15334,7 @@ aborder-color:  rgb(195, 195, 195);
     </property>
     <layout class="QGridLayout" name="gridLayout">
      <item row="0" column="0">
-      <widget class="QWidget" name="widget" native="true"/>
+      <widget class="PlotWidget" name="sudokuGraph" native="true"/>
      </item>
     </layout>
    </widget>
@@ -15479,6 +15479,14 @@ aborder-color:  rgb(195, 195, 195);
    </widget>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PlotWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">pyqtgraph</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

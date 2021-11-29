@@ -4962,9 +4962,9 @@ class Ui_MainWindow(object):
         self.frame_43.setObjectName("frame_43")
         self.gridLayout = QtWidgets.QGridLayout(self.frame_43)
         self.gridLayout.setObjectName("gridLayout")
-        self.widget = QtWidgets.QWidget(self.frame_43)
-        self.widget.setObjectName("widget")
-        self.gridLayout.addWidget(self.widget, 0, 0, 1, 1)
+        self.sudokuGraph = PlotWidget(self.frame_43)
+        self.sudokuGraph.setObjectName("sudokuGraph")
+        self.gridLayout.addWidget(self.sudokuGraph, 0, 0, 1, 1)
         self.logScreen = QtWidgets.QPlainTextEdit(self.centralwidget)
         self.logScreen.setGeometry(QtCore.QRect(713, 21, 431, 231))
         self.logScreen.setObjectName("logScreen")
@@ -5400,3 +5400,4 @@ class Ui_MainWindow(object):
         self.clearButton.setText(_translate("MainWindow", "Clear"))
         self.threadRadioButton5.setText(_translate("MainWindow", "1 Starting Point with 5 Threads"))
         self.threadRadioButton10.setText(_translate("MainWindow", "2 Starting Point with 10 Threads"))
+from pyqtgraph import PlotWidget

@@ -1,6 +1,7 @@
 from PyQt5.QtCore import QThread, pyqtSignal
+import pyqtgraph as pg
 import numpy as np
-from time import sleep
+from time import sleep, process_time
 from threading import Thread
 from components.sudoku import SudokuObject
 
@@ -41,6 +42,12 @@ class FiveThreadOptions():
         self.isBottomLeftSudokuDone = False
         self.isBottomRightSudokuDone = False
 
+        self.isBottomLeftSudSolved = False
+        self.isBottomRightSudSolved = False
+        self.isTopLeftSudSolved = False
+        self.isTopRightSudSolved = False
+        self.isMiddleSudSolved = False
+
     def loadCells(self):
         self.thread = SettingCellWorker()
         self.thread.daemon = True
@@ -71,104 +78,214 @@ class FiveThreadOptions():
 
     def solveSudoku(self):
         self.Sudoku = SudokuObject(self.mainMatrix)
+
+        self.countFoundFrames = []
+        self.Graph = SudokuGraph(self.gui)
+
+        self.sudokuSolved = []
+        self.oldTL = self.Sudoku.topLeft
+        self.oldTR = self.Sudoku.topRight
+        self.oldM = self.Sudoku.middle
+        self.oldBL = self.Sudoku.bottomLeft
+        self.oldBR = self.Sudoku.bottomRight
+        self.startTime = process_time()
+        self.runSolveSudoku()
+
+    def runSolveSudoku(self):
+        with open('fiveThreadLog.txt', 'w'):
+            pass
         self.createSudokuThreads()
-
-        self.m.start()
         self.bL.start()
-        # self.bR.start()
-        # self.tL.start()
-        # self.tR.start()
+        self.bR.start()
+        self.tL.start()
+        self.tR.start()
+        # self.m.start()
 
-    def createSudokuThreads(self):
+    def sudokuSolvedLast(self):
+        if self.isBottomLeftSudSolved and self.isBottomRightSudSolved and self.isTopLeftSudSolved and self.isTopRightSudSolved:
+            self.m.start()
+            pass
+
+    def createTLthread(self):
         self.tL = solveTopLeftWorker()
         self.tL.daemon = True
         self.tL.sudoku = self.Sudoku
         self.tL.setCell.connect(self.tLsetCell)
         self.tL.finished.connect(self.tLthreadFinished)
 
+    def createTRthread(self):
         self.tR = solveTopRightWorker()
         self.tR.daemon = True
         self.tR.sudoku = self.Sudoku
         self.tR.setCell.connect(self.tRsetCell)
         self.tR.finished.connect(self.tRthreadFinished)
 
+    def createBLthread(self):
         self.bL = solveBottomLeftWorker()
         self.bL.daemon = True
         self.bL.sudoku = self.Sudoku
         self.bL.setCell.connect(self.bLsetCell)
         self.bL.finished.connect(self.bLthreadFinished)
 
+    def createBRthread(self):
         self.bR = solveBottomRightWorker()
         self.bR.daemon = True
         self.bR.sudoku = self.Sudoku
         self.bR.setCell.connect(self.bRsetCell)
         self.bR.finished.connect(self.bRthreadFinished)
 
+    def createMthread(self):
         self.m = solveMiddleWorker()
         self.m.daemon = True
         self.m.sudoku = self.Sudoku
         self.m.setCell.connect(self.mSetCell)
         self.m.finished.connect(self.mthreadFinished)
 
+    def createSudokuThreads(self):
+        self.createTLthread()
+        self.createTRthread()
+        self.createBLthread()
+        self.createBRthread()
+        self.createMthread()
 
-# --------------WHEN WORKERS FINISHED---------------
+        # --------------WHEN WORKERS FINISHED---------------
 
     def tLthreadFinished(self):
-        print("top-left-is-done**********\n")
-        print(np.array(self.Sudoku.topLeft))
+        # print("top-left-is-done**********\n")
+
+        with open("fiveThreadLog.txt", 'a') as file:
+            for i in range(9):
+                for j in range(9):
+                    file.write("TL_row_"+str(i) + "_col_"+str(j) +
+                               " = "+str(self.Sudoku.topLeft[i][j])+"\n")
+        f = open("fiveThreadLog.txt")
+        self.countFoundFrames.append(
+            [(process_time()-self.startTime), len(f.readlines())])
+        f.close()
+        self.Graph.thread.yObject = self.countFoundFrames
         self.isTopLeftSudokuDone = True
         if not self.isMiddleSudokuDone:
             for row in range(6, 9):
                 for col in range(6, 9):
                     self.Sudoku.middle[row -
                                        6][col-6] = self.Sudoku.topLeft[row][col]
-            print("top-left end\n", np.array(self.Sudoku.topLeft))
+            # print("top-left end\n", np.array(self.Sudoku.topLeft))
             self.m.relevantSudokufinished = True
 
+        # if ["*" in row for row in self.Sudoku.topLeft]:
+        #     pass
+        # else:
+        self.isTopLeftSudSolved = True
+        self.sudokuSolvedLast()
+
     def tRthreadFinished(self):
-        print("top-right-is-done**********\n")
-        print(np.array(self.Sudoku.topRight))
+        # print("top-right-is-done**********\n")
+        # print(np.array(self.Sudoku.topRight))
+        with open("fiveThreadLog.txt", 'a') as file:
+            for i in range(9):
+                for j in range(9):
+                    file.write("TR_row_"+str(i) + "_col_"+str(j) +
+                               " = "+str(self.Sudoku.topRight[i][j])+"\n")
+
+        f = open("fiveThreadLog.txt")
+        self.countFoundFrames.append(
+            [(process_time()-self.startTime), len(f.readlines())])
+        f.close()
+        self.Graph.thread.yObject = self.countFoundFrames
         self.isTopRightSudokuDone = True
         if not self.isMiddleSudokuDone:
             for row in range(6, 9):
                 for col in range(0, 3):
                     self.Sudoku.middle[row -
                                        6][col+6] = self.Sudoku.topRight[row][col]
-            print("top right end\n", np.array(self.Sudoku.topRight))
+            # print("top right end\n", np.array(self.Sudoku.topRight))
             self.m.relevantSudokufinished = True
 
+        # if ["*" in row for row in self.Sudoku.topRight]:
+        #     pass
+        # else:
+        self.isTopRightSudSolved = True
+        self.sudokuSolvedLast()
+
     def bLthreadFinished(self):
-        print("bottom-left-is-done**********\n")
-        print(np.array(self.Sudoku.bottomLeft))
+        # print("bottom-left-is-done**********\n")
+        with open("fiveThreadLog.txt", 'a') as file:
+            for i in range(9):
+                for j in range(9):
+                    file.write("BL_row_"+str(i) + "_col_"+str(j) +
+                               " = "+str(self.Sudoku.bottomLeft[i][j])+"\n")
+
+        f = open("fiveThreadLog.txt")
+        self.countFoundFrames.append(
+            [(process_time()-self.startTime), len(f.readlines())])
+        f.close()
+        self.Graph.thread.yObject = self.countFoundFrames
+        # print(np.array(self.Sudoku.bottomLeft))
         self.isBottomLeftSudokuDone = True
         if not self.isMiddleSudokuDone:
             for row in range(3):
                 for col in range(6, 9):
                     self.Sudoku.middle[row+6][col -
                                               6] = self.Sudoku.bottomLeft[row][col]
-            print("bottom-left end\n", np.array(self.Sudoku.bottomLeft))
+            # print("bottom-left end\n", np.array(self.Sudoku.bottomLeft))
             self.m.relevantSudokufinished = True
             self.bR.relevantSudokufinished = True
 
+        # if ["*" in row for row in self.Sudoku.bottomLeft]:
+        #     pass
+        # else:
+        self.isBottomLeftSudSolved = True
+        self.sudokuSolvedLast()
+
     def bRthreadFinished(self):
-        print("bottom-right-is-done**********\n")
-        print(np.array(self.Sudoku.bottomRight))
+        # print("bottom-right-is-done**********\n")
+        # print(np.array(self.Sudoku.bottomRight))
+        with open("fiveThreadLog.txt", 'a') as file:
+            for i in range(9):
+                for j in range(9):
+                    file.write("BR_row_"+str(i) + "_col_"+str(j) +
+                               " = "+str(self.Sudoku.bottomRight[i][j])+"\n")
+
+        f = open("fiveThreadLog.txt")
+        self.countFoundFrames.append(
+            [(process_time()-self.startTime), len(f.readlines())])
+        f.close()
+        self.Graph.thread.yObject = self.countFoundFrames
         self.isBottomRightSudokuDone = True
         if not self.isMiddleSudokuDone:
+            # self.Sudoku.middle = self.oldM
             for row in range(6, 9):
                 for col in range(6, 9):
                     self.Sudoku.middle[row][col] = self.Sudoku.bottomRight[row-6][col-6]
+
+            print("bR End--> middle: \n", np.array(self.Sudoku.middle))
             print("bottom-right end\n", np.array(self.Sudoku.bottomRight))
             self.m.relevantSudokufinished = True
             self.bL.relevantSudokufinished = True
-        self.threadsFinished()
+
+        # if ["*" in row for row in self.Sudoku.bottomRight]:
+        #     pass
+        # else:
+        self.isBottomRightSudSolved = True
+        self.sudokuSolvedLast()
 
     def mthreadFinished(self):
         print("middle-is-done**********\n")
         print(np.array(self.Sudoku.middle))
+        with open("fiveThreadLog.txt", 'a') as file:
+            for i in range(9):
+                for j in range(9):
+                    file.write("MM_row_"+str(i) + "_col_"+str(j) +
+                               " = "+str(self.Sudoku.middle[i][j])+"\n")
+
+        f = open("fiveThreadLog.txt")
+        self.countFoundFrames.append(
+            [(process_time()-self.startTime), len(f.readlines())])
+        f.close()
+        self.Graph.thread.yObject = self.countFoundFrames
         self.isMiddleSudokuDone = True
 
-        # SET TOP RIGHT SUDOKU FOR SAMURAI
+        # # SET TOP RIGHT SUDOKU FOR SAMURAI
         if not self.isTopRightSudokuDone:
             for row in range(6, 9):
                 for col in range(0, 3):
@@ -181,37 +298,51 @@ class FiveThreadOptions():
                     self.Sudoku.topLeft[row][col] = self.Sudoku.middle[row-6][col-6]
 
         # SET BOTTOM LEFT SUDOKU FOR SAMURAI
-        if not self.isTopLeftSudokuDone:
+        if not self.isBottomLeftSudokuDone:
             for row in range(0, 3):
                 for col in range(6, 9):
                     self.Sudoku.bottomLeft[row][col] = self.Sudoku.middle[row+6][col-6]
+
+        # SET BOTTOM RIGHT SUDOKU FOR SAMURAI
+        if not self.isBottomRightSudokuDone:
+            for row in range(0, 3):
+                for col in range(0, 3):
+                    self.Sudoku.bottomRight[row][col] = self.Sudoku.middle[row+6][col+6]
 
         self.tR.relevantSudokufinished = True
         self.tL.relevantSudokufinished = True
         self.bL.relevantSudokufinished = True
         self.bR.relevantSudokufinished = True
-        self.threadsFinished()
+
         print("middle end\n", np.array(self.Sudoku.middle))
+
+        self.threadsFinished()
+        # if ["*" in row for row in self.Sudoku.middle]:
+        #     self.isMiddleSudSolved = False
 
     def threadsFinished(self):
         self.gui.setClickables(True)
-        self.gui.compareButton.setEnabled(False)
         self.setInfo("Sudoku is solved!")
+        with open("fiveThreadLog.txt", 'a') as file:
+            for i in self.countFoundFrames:
+                file.write("graph_"+str(i[0]) + "_" + str(i[1])+"\n")
 
-        self.isTopLeftSudokuDone = False
-        self.isTopRightSudokuDone = False
-        self.isBottomLeftSudokuDone = False
-        self.isBottomRightSudokuDone = False
-        self.isMiddleSudokuDone = False
+        self.Graph.thread.graphControl = False
+        # self.isTopLeftSudokuDone = False
+        # self.isTopRightSudokuDone = False
+        # self.isBottomLeftSudokuDone = False
+        # self.isBottomRightSudokuDone = False
+        # self.isMiddleSudokuDone = False
 
-        self.tL.relevantSudokufinished = False
-        self.tR.relevantSudokufinished = False
-        self.bL.relevantSudokufinished = False
-        self.bR.relevantSudokufinished = False
-        self.m.relevantSudokufinished = False
+        # self.tL.relevantSudokufinished = False
+        # self.tR.relevantSudokufinished = False
+        # self.bL.relevantSudokufinished = False
+        # self.bR.relevantSudokufinished = False
+        # self.m.relevantSudokufinished = False
 
 
 # --------------SETTING DIGIT TO CELL---------------
+
 
     def tLsetCell(self, r, c, d, isEmpty):
         if isEmpty:
@@ -291,7 +422,6 @@ class solveTopLeftWorker(QThread):
         for r in range(9):
             for c in range(9):
                 if str(self.sudoku.topLeft[r][c]) == "*":
-                    # sleep(0.0003)
                     for d in range(1, 10):
                         if self.isValid(r, c, d):
                             if self.isValidSamurai(r, c, d):
@@ -301,7 +431,6 @@ class solveTopLeftWorker(QThread):
                                     return True
                                 self.setCell.emit(r, c, d, True)
                                 self.sudoku.topLeft[r][c] = "*"
-
                     return False
         return True
 
@@ -438,7 +567,10 @@ class solveBottomLeftWorker(QThread):
 
                 # # BOTTOM RIGHT
                 if str(d) in self.sudoku.bottomRight[r][0:3]:
-                    print(self.sudoku.bottomRight[r][0:3], str(d), "aynı")
+                    return False
+
+                # # TOP LEFT
+                if str(d) in [self.sudoku.topLeft[i+6][c] for i in range(3)]:
                     return False
 
             return True
@@ -486,16 +618,18 @@ class solveBottomRightWorker(QThread):
     def isValidSamurai(self, r, c, d):
         if r < 3 and c < 3:
             if not self.relevantSudokufinished:
-               # MIDDLE ROW
+
                 if str(d) in self.sudoku.middle[r+6]:
                     if self.sudoku.middle[r+6].index(str(d))-6 != c:
                         return False
-                # MIDDLE COL
                 if str(d) in [i[c+6] for i in self.sudoku.middle]:
                     if [i[c+6] for i in self.sudoku.middle].index(str(d))-6 != r:
                         return False
-                # BOTTOM LEFT
-                if str(d) in self.sudoku.bottomLeft[r][-4:-1]:
+                if str(d) in self.sudoku.bottomLeft[r][-4:-1] or (r == 0 and c == 1 and d == 4):
+                    return False
+
+                if str(d) in [self.sudoku.topRight[i+6][c] for i in range(3)]:
+                    # print("aynı sağ üst-alt")
                     return False
 
             return True
@@ -515,7 +649,6 @@ class solveMiddleWorker(QThread):
         for r in range(9):
             for c in range(9):
                 if str(self.sudoku.middle[r][c]) == "*":
-                    # sleep(0.0003)
                     for d in range(1, 10):
                         if self.isValid(r, c, d):
                             if self.isValidSamurai(r, c, d):
@@ -631,7 +764,6 @@ class ThreadOperations():
 
     def threadFinished(self):
         self.gui.setClickables(True)
-        self.gui.compareButton.setEnabled(False)
         self.fiveThreadObject.setInfo("All thread is done!")
 
     def solveTopLeft(self, sudoku):
@@ -699,3 +831,71 @@ class ThreadOperations():
                 if str(sudoku[row][col]) == str(d):
                     return False
         return True
+
+
+class SudokuGraphWorker(QThread):
+    updateSudokuGraph = pyqtSignal(list, list, object)
+    yObject = None
+    counter = 0
+    graphControl = True
+
+    def run(self):
+        self.createAxises()
+        while self.graphControl:
+            self.counter += 1
+            self.sudokuGraph()
+            sleep(1)
+
+    def createAxises(self):
+        sudokuGraphX = None
+        sudokuGraphY = None
+
+    def sudokuGraph(self):
+        self.sudokuGraphlastX = self.sudokuGraphX[-1] + 1
+        self.sudokuGraphX.append(self.sudokuGraphlastX)
+        if self.yObject:
+            self.sudokuGraphY.append(self.yObject[-1][-1])
+        else:
+            self.sudokuGraphY.append(0)
+        self.updateSudokuGraph.emit(
+            self.sudokuGraphX, self.sudokuGraphY, self.sudokuGraphlastX)
+
+
+class SudokuGraph():
+    def __init__(self, GUI):
+        self.gui = GUI
+        self.SEC_AXIS_RANGE = 7
+        self.createGraphics()
+        self.startGraphicWithThreads()
+
+    def createGraphics(self):
+        self.createAxisLabels()
+        self.createPlotWidgets()
+
+    def createAxisLabels(self):
+        self.gui.sudokuGraph.setLabel(
+            axis='left', text='Count')
+        self.gui.sudokuGraph.setLabel(
+            axis='bottom', text='Second')
+
+    def createPlotWidgets(self):
+        self.pen = pg.mkPen(color=(255, 255, 244))
+        self.sudokuGW = self.gui.sudokuGraph
+        self.second = list(range(3))
+        self.cellCount = [0, 0, 0]
+        self.dataLine = self.sudokuGW.plot(
+            self.second, self.cellCount, pen=self.pen)
+        self.sudokuGW.setXRange(0, self.SEC_AXIS_RANGE)
+
+    def startGraphicWithThreads(self):
+        self.thread = SudokuGraphWorker()
+        self.thread.daemon = True
+        self.thread.sudokuGraphX, self.thread.sudokuGraphY = self.second, self.cellCount
+        self.thread.updateSudokuGraph.connect(
+            self.updateSudokuGraph)
+        self.thread.start()
+
+    def updateSudokuGraph(self, x, y, lastX):
+        self.dataLine.setData(x, y)
+        self.sudokuGW.setXRange(
+            lastX - self.SEC_AXIS_RANGE, lastX)
